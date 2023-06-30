@@ -1,0 +1,46 @@
+<table class="table datatable mt-5">
+  <caption></caption>
+  <thead>
+  <tr>
+    <th scope="col">#</th>
+    <th scope="col">Type</th>
+    <th scope="col">Sub Total</th>
+    <th scope="col">Tax</th>
+    <th scope="col">Shipping</th>
+    <th scope="col">Discount</th>
+    <th scope="col">Total</th>
+    <th scope="col">Status</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let salesOrder of salesOrders">
+    <th scope="row">{{salesOrder.id}}</th>
+    <td>{{salesOrder.type}}</td>
+    <td>{{salesOrder.subtotal}}</td>
+    <td>{{salesOrder.tax}}</td>
+    <td>{{salesOrder.shipping}}</td>
+    <td>{{salesOrder.discount}}</td>
+    <td>{{salesOrder.total}}</td>
+    <td>{{salesOrder.status}}</td>
+    <td>
+      <button (click)="onViewClick(salesOrder)" class="btn text-primary">View</button>
+    </td>
+  </tr>
+  </tbody>
+</table>
+<div style="display: flex;" *ngIf="totalPages>0">
+  <div style="flex: 1"></div>
+  <nav>
+    <ul class="pagination">
+      <li class="page-item" [class.disabled]="currentPage===1">
+        <a class="page-link" (click)="onPageChange(currentPage=currentPage-1)">Previous</a>
+      </li>
+      <li class="page-item " *ngFor="let pageNumber of pageNumbers" [class.active]="pageNumber === currentPage">
+        <a class="page-link" (click)="onPageChange(currentPage=pageNumber)">{{pageNumber}}</a>
+      </li>
+      <li class="page-item" [class.disabled]="currentPage === totalPages">
+        <a class="page-link" (click)="onPageChange(currentPage=currentPage+1)">Next</a>
+      </li>
+    </ul>
+  </nav>
+</div>

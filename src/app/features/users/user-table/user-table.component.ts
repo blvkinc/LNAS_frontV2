@@ -1,0 +1,62 @@
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {UserDto} from '../../../api/models/user-dto';
+import {UserResourceService} from '../../../api/services/user-resource.service';
+
+@Component({
+  selector: 'app-user-table',
+  standalone: true,
+  imports: [CommonModule],
+  templateUrl: './user-table.component.html',
+})
+export class UserTableComponent implements OnInit {
+
+  @Output() onEdit: EventEmitter<UserDto> = new EventEmitter<UserDto>();
+
+  users: UserDto[] = [];
+  currentPage = 1;
+  pageSize = 5;
+  totalElements = 0;
+  sortBy = ['id,desc'];
+  filter = '';
+
+  pageNumbers: number[] = [];
+  totalPages: number;
+
+  constructor(
+    private service: UserResourceService,
+  ) {}
+
+  ngOnInit(): void {
+    this.fetchData();
+  }
+
+  onPageChange(page: number): void {
+    this.currentPage = page;
+    this.fetchData();
+  }
+
+  onEditClick(plant: UserDto) {
+    this.onEdit.emit(plant);
+  }
+
+  fetchData(): void {
+    this.service.paginateUsers({
+      page: this.currentPage - 1,
+      size: this.pageSize,
+      sort: this.sortBy,
+    }).subscribe({
+      next: (data) => {
+        this.users = data.content;
+        this.totalElements = data.totalElements;
+        this.totalPages = data.totalPages;
+        this.pageNumbers = new Array(data.totalPages).fill(0).map((x, i) => i + 1);
+      },
+
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
+
+}

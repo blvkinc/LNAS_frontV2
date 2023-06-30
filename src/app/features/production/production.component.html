@@ -1,0 +1,21 @@
+<div class="pagetitle">
+  <h1>Production Management</h1>
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+      <li class="breadcrumb-item">Productions</li>
+    </ol>
+  </nav>
+</div>
+<section class="section">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+          <app-production-form (onSearch)="onSearch($event)" (onCreate)="onRefresh()"/>
+          <app-production-table (onEdit)="onEdit($event)"/>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

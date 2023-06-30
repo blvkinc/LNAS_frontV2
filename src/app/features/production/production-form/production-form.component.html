@@ -1,0 +1,97 @@
+<h5 class="card-title">
+  {{type === 'SEARCH' ? 'Search Productions' : ''}}
+  {{type === 'CREATE' ? 'Create New Production' : ''}}
+  {{type === 'UPDATE' ? 'Update Production - ' : ''}}{{type === 'UPDATE' ? inputValue.id : ''}}
+</h5>
+<form [formGroup]="form" class="row g-3">
+  <div class="col-md-6">
+    <label>Product name</label>
+    <input type="text" class="form-control" formControlName="name">
+    <!-- Display error message if the name field is invalid -->
+    <div *ngIf="form.get('name').invalid && form.get('name').touched && type !== 'SEARCH'">
+      <div *ngIf="form.get('name').errors.required" style="color: orangered">
+        Name is required.
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <label>Quantity</label>
+    <input type="number" class="form-control" formControlName="qty">
+    <!-- Display error message if the qty field is invalid -->
+    <div *ngIf="form.get('qty').invalid && form.get('qty').touched && type !== 'SEARCH'">
+      <div *ngIf="form.get('qty').errors.required" style="color: orangered">
+        Quantity is required.
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6" *ngIf="plantsList">
+    <label>Plant</label>
+    <select id="inputPlant" class="form-select" formControlName="plant">
+      <option *ngFor="let plant of plantsList" [value]="plant.id">{{plant.name}}</option>
+    </select>
+    <!-- Display error message if the name field is invalid -->
+    <div *ngIf="form.get('plant').invalid && form.get('plant').touched && type !== 'SEARCH'">
+      <div *ngIf="form.get('plant').errors.required" style="color: orangered">
+        Plant is required.
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6" *ngIf="farmsList">
+    <label>Farm</label>
+    <select id="inputFarm" class="form-select" formControlName="farm">
+      <option *ngFor="let farm of farmsList" [value]="farm.id">{{farm.name}}</option>
+    </select>
+    <!-- Display error message if the name field is invalid -->
+    <div *ngIf="form.get('farm').invalid && form.get('farm').touched && type !== 'SEARCH'">
+      <div *ngIf="form.get('farm').errors.required" style="color: orangered">
+        Farm is required.
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <label>Product ID</label>
+    <input type="text" class="form-control" formControlName="productId">
+    <!-- Display error message if the name field is invalid -->
+    <div *ngIf="form.get('productId').invalid && form.get('productId').touched && type !== 'SEARCH'">
+      <div *ngIf="form.get('productId').errors.required" style="color: orangered">
+        Product ID is required.
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <label>Status</label>
+    <select id="inputState" class="form-select" formControlName="status">
+      <option value="AVAILABLE">Available</option>
+      <option value="IN_PRODUCTION">In Production</option>
+    </select>
+    <!-- Display error message if the name field is invalid -->
+    <div *ngIf="form.get('status').invalid && form.get('status').touched && type !== 'SEARCH'">
+      <div *ngIf="form.get('status').errors.required" style="color: orangered">
+        Status is required.
+      </div>
+    </div>
+  </div>
+  <div class="col-md-12">
+    <label>Description</label>
+    <input type="text" class="form-control" formControlName="description">
+  </div>
+  <div style="display: flex; flex-direction: row;justify-content: space-between;">
+    <div style="display: flex; flex-direction: row; gap: 10px">
+      <button *ngIf="type=='SEARCH'" type="button" class="btn btn-primary" (click)="type='CREATE'">Add New</button>
+      <button *ngIf="type==='UPDATE'" type="button" class="btn btn-dark" (click)="onSubmit()">Update</button>
+      <button *ngIf="type==='UPDATE'" type="button" class="btn btn-secondary" (click)="onCancel()">
+        Cancel
+      </button>
+    </div>
+    <div style="display: flex; flex-direction: row; gap: 10px">
+      <button *ngIf="type==='SEARCH'" type="button" class="btn btn-primary" (click)="onSearchClick()">
+        Search
+      </button>
+      <button *ngIf="type==='CREATE'" type="button" class="btn btn-primary" (click)="onSubmit()">Save</button>
+      <button *ngIf="type==='SEARCH'" type="button" class="btn btn-secondary" (click)="onSearchClear()">Clear</button>
+      <button *ngIf="type==='CREATE'" type="button" class="btn btn-secondary" (click)="onCancel()">
+        Cancel
+      </button>
+    </div>
+  </div>
+</form>

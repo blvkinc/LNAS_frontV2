@@ -1,0 +1,78 @@
+<h5 class="card-title">
+  {{type === 'SEARCH' ? 'Search Suppliers' : ''}}
+  {{type === 'CREATE' ? 'Create New Supplier' : ''}}
+  {{type === 'UPDATE' ? 'Update Supplier - ' : ''}}{{type === 'UPDATE' ? inputValue.id : ''}}
+</h5>
+<form [formGroup]="form" class="row g-3">
+  <div class="col-md-6">
+    <label>First Name</label>
+    <input type="text" class="form-control" formControlName="firstName">
+    <!-- Display error message if the firstName field is invalid -->
+    <div *ngIf="form.get('firstName').invalid && form.get('firstName').touched && type !== 'SEARCH'">
+      <div *ngIf="form.get('firstName').errors.required" style="color: orangered">
+        First Name is required.
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <label>Last Name</label>
+    <input type="text" class="form-control" formControlName="lastName">
+    <!-- Display error message if the lastName field is invalid -->
+    <div *ngIf="form.get('lastName').invalid && form.get('lastName').touched && type !== 'SEARCH'">
+      <div *ngIf="form.get('lastName').errors.required" style="color: orangered">
+        Last Name is required.
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <label>Email</label>
+    <input type="email" class="form-control" formControlName="email">
+  </div>
+  <div class="col-md-6">
+    <label>Phone</label>
+    <input type="tel" class="form-control" formControlName="phone">
+  </div>
+  <div class="col-md-6">
+    <label>Address</label>
+    <input type="text" class="form-control" formControlName="address">
+    <!-- Display error message if the address field is invalid -->
+    <div *ngIf="form.get('address').invalid && form.get('address').touched && type !== 'SEARCH'">
+      <div *ngIf="form.get('address').errors.required" style="color: orangered">
+        Address is required.
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <label>Status</label>
+    <select id="inputState" class="form-select" formControlName="status">
+      <option value="ACTIVE">Active</option>
+      <option value="INACTIVE">Inactive</option>
+      <option value="REMOVED">Removed</option>
+    </select>
+    <!-- Display error message if the name field is invalid -->
+    <div *ngIf="form.get('status').invalid && form.get('status').touched && type !== 'SEARCH'">
+      <div *ngIf="form.get('status').errors.required" style="color: orangered">
+        Status is required.
+      </div>
+    </div>
+  </div>
+  <div style="display: flex; flex-direction: row;justify-content: space-between;">
+    <div style="display: flex; flex-direction: row; gap: 10px">
+      <button *ngIf="type=='SEARCH'" type="button" class="btn btn-primary" (click)="type='CREATE'">Add New</button>
+      <button *ngIf="type==='UPDATE'" type="button" class="btn btn-dark" (click)="onSubmit()">Update</button>
+      <button *ngIf="type==='UPDATE'" type="button" class="btn btn-secondary" (click)="onCancel()">
+        Cancel
+      </button>
+    </div>
+    <div style="display: flex; flex-direction: row; gap: 10px">
+      <button *ngIf="type==='SEARCH'" type="button" class="btn btn-primary" (click)="onSearchClick()">
+        Search
+      </button>
+      <button *ngIf="type==='CREATE'" type="button" class="btn btn-primary" (click)="onSubmit()">Save</button>
+      <button *ngIf="type==='SEARCH'" type="button" class="btn btn-secondary" (click)="onSearchClear()">Clear</button>
+      <button *ngIf="type==='CREATE'" type="button" class="btn btn-secondary" (click)="onCancel()">
+        Cancel
+      </button>
+    </div>
+  </div>
+</form>

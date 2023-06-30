@@ -1,0 +1,152 @@
+<h5 class="card-title">
+  {{type === 'SEARCH' ? 'Search Sales Orders' : ''}}
+  {{type === 'CREATE' ? 'Create New Sales Order' : ''}}
+  {{type === 'UPDATE' ? 'Update Sales Order - ' : ''}}{{type === 'UPDATE' ? inputValue.id : ''}}
+</h5>
+<form [formGroup]="form" class="row g-3">
+  <div class="col-md-6">
+    <label>Status</label>
+    <select id="inputState" class="form-select" formControlName="status">
+      <option value="ACTIVE">Active</option>
+      <option value="CLOSED">Closed</option>
+    </select>
+    <!-- Display error message if the status field is invalid -->
+    <div *ngIf="form.get('status').invalid && form.get('status').touched && type !== 'SEARCH'">
+      <div *ngIf="form.get('status').errors.required" style="color: orangered">
+        Status is required.
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6" *ngIf="type==='CREATE'">
+    <label>Type</label>
+    <input type="text" class="form-control" formControlName="type">
+   <!-- Display error message if the status field is invalid -->
+    <div *ngIf="form.get('type').invalid && form.get('type').touched && type !== 'SEARCH'">
+      <div *ngIf="form.get('type').errors.required" style="color: orangered">
+        Type is required.
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4" *ngIf="type==='CREATE'">
+    <label>Sub Total</label>
+    <input type="number" class="form-control" formControlName="subtotal">
+    <!-- Display error message if the status field is invalid -->
+    <div *ngIf="form.get('subtotal').invalid && form.get('subtotal').touched && type !== 'SEARCH'">
+      <div *ngIf="form.get('subtotal').errors.required" style="color: orangered">
+        Subtotal is required.
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4" *ngIf="type==='CREATE'">
+    <label>Discount</label>
+    <input type="number" class="form-control" formControlName="discount">
+  </div>
+
+  <div class="col-md-4" *ngIf="type==='CREATE'">
+    <label>Tax</label>
+    <input type="number" class="form-control" formControlName="tax">
+  </div>
+
+  <div class="col-md-6" *ngIf="type==='CREATE'">
+    <label>Shipping</label>
+    <input type="number" class="form-control" formControlName="shipping">
+  </div>
+
+  <div class="col-md-6" *ngIf="type==='CREATE'">
+    <label>Total</label>
+    <input type="number" class="form-control" formControlName="total">
+    <!-- Display error message if the status field is invalid -->
+    <div *ngIf="form.get('total').invalid && form.get('total').touched && type !== 'SEARCH'">
+      <div *ngIf="form.get('total').errors.required" style="color: orangered">
+        Total is required.
+      </div>
+    </div>
+  </div>
+
+  <!-- Order Items -->
+  <div class="col-md-12" *ngIf="type==='CREATE'">
+    <h4>Sales Order Items</h4>
+    <div formArrayName="items">
+      <div class="row mt-5" *ngFor="let item of items.controls; let i = index" [formGroupName]="i">
+        <div class="col-md-3" *ngIf="plantList">
+          <label>Plant</label>
+          <select id="inputPlant" class="form-select" formControlName="plant">
+            <option *ngFor="let plant of plantList" [value]="plant.id">{{plant.name}}</option>
+          </select>
+          <!-- Display error message if the name field is invalid -->
+          <!--          <div-->
+          <!--            *ngIf="items[i].get('plant').invalid && items[i].get('plant').touched && type !== 'SEARCH'">-->
+          <!--            <div *ngIf="items[i].get('plant').errors.required" style="color: orangered">-->
+          <!--              Plant is required.-->
+          <!--            </div>-->
+          <!--          </div>-->
+        </div>
+
+        <div class="col-md-3">
+          <label>Price</label>
+          <input type="number" class="form-control" formControlName="price">
+          <!-- Display error message if the price field is invalid -->
+          <!--          <div-->
+          <!--            *ngIf="items[i].get('price').invalid && items[i].get('price').touched && type !== 'SEARCH'">-->
+          <!--            <div *ngIf="items[i].get('price').errors.required" style="color: orangered">-->
+          <!--              Price is required.-->
+          <!--            </div>-->
+          <!--            <div *ngIf="items[i].get('price').errors.pattern" style="color: orangered">-->
+          <!--              Price should be a valid number with up to 2 decimal places.-->
+          <!--            </div>-->
+          <!--          </div>-->
+        </div>
+        <div class="col-md-3">
+          <label>Discount</label>
+          <input type="number" class="form-control" formControlName="discount">
+        </div>
+        <div class="col-md-3">
+          <label>Quantity</label>
+          <input type="number" class="form-control" formControlName="qty">
+          <!-- Display error message if the qty field is invalid -->
+          <!--          <div-->
+          <!--            *ngIf="items[i].get('qty').invalid && items[i].get('qty').touched && type !== 'SEARCH'">-->
+          <!--            <div *ngIf="items[i].get('qty').errors.required" style="color: orangered">-->
+          <!--              Quantity is required.-->
+          <!--            </div>-->
+          <!--          </div>-->
+        </div>
+        <div class="col-md-9">
+          <label>Description</label>
+          <input type="text" class="form-control" formControlName="description">
+        </div>
+        <div class="col-md-3">
+          <!-- Remove Item button -->
+          <button type="button" class="btn btn-danger mt-4" (click)="removeItem(i)">Remove Item</button>
+        </div>
+      </div>
+    </div>
+    <!-- Add Item button -->
+    <div class="col-md-12 mt-5">
+      <button type="button" class="btn btn-primary" (click)="addItem()">Add Item</button>
+    </div>
+  </div>
+
+  <div style="display: flex; flex-direction: row;justify-content: space-between;">
+    <div style="display: flex; flex-direction: row; gap: 10px">
+      <button *ngIf="type=='SEARCH'" type="button" class="btn btn-primary" (click)="type='CREATE'">Add New</button>
+      <button *ngIf="type==='UPDATE'" type="button" class="btn btn-dark" (click)="onSubmit()">Update</button>
+      <button *ngIf="type==='UPDATE'" type="button" class="btn btn-secondary" (click)="onCancel()">
+        Cancel
+      </button>
+    </div>
+    <div style="display: flex; flex-direction: row; gap: 10px">
+      <button *ngIf="type==='SEARCH'" type="button" class="btn btn-primary" (click)="onSearchClick()">
+        Search
+      </button>
+      <button *ngIf="type==='CREATE'" type="button" class="btn btn-primary" (click)="onSubmit()">Save</button>
+      <button *ngIf="type==='SEARCH'" type="button" class="btn btn-secondary" (click)="onSearchClear()">Clear</button>
+      <button *ngIf="type==='CREATE'" type="button" class="btn btn-secondary" (click)="onCancel()">
+        Cancel
+      </button>
+    </div>
+  </div>
+</form>

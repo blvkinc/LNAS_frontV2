@@ -1,0 +1,21 @@
+<div class="pagetitle">
+  <h1>Farm Management</h1>
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+      <li class="breadcrumb-item">Farms</li>
+    </ol>
+  </nav>
+</div>
+<section class="section">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+          <app-farm-form (onSearch)="onSearch($event)" (onCreate)="onRefresh()"/>
+          <app-farm-table (onEdit)="onEdit($event)"/>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
