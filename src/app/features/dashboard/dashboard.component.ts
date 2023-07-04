@@ -4,15 +4,15 @@ import {ProductionChartComponent} from '../charts/production-chart/production-ch
 import {SalesChartComponent} from '../charts/sales-chart/sales-chart.component';
 import {ProductionByFarmChartComponent} from '../charts/production-by-farm-chart/production-by-farm-chart.component';
 import {
-  ProductionByStatusChartComponent,
-} from '../charts/production-by-status-chart/production-by-status-chart.component';
+  PurchaseChartComponent,
+} from '../charts/purchase-chart/purchase-chart.component';
 import { CardsComponent } from 'src/app/components/cards/cards.component';
 
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, ProductionChartComponent, SalesChartComponent, ProductionByFarmChartComponent, ProductionByStatusChartComponent,CardsComponent],
+  imports: [CommonModule, ProductionChartComponent, SalesChartComponent, ProductionByFarmChartComponent, PurchaseChartComponent,CardsComponent,],
   templateUrl: './dashboard.component.html',
 })
 export class DashboardComponent {

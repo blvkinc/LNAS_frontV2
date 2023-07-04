@@ -4,6 +4,17 @@
   {{type === 'UPDATE' ? 'Update Sales Order - ' : ''}}{{type === 'UPDATE' ? inputValue.id : ''}}
 </h5>
 <form [formGroup]="form" class="row g-3">
+
+  <div class="col-md-6">
+    <label>Invoice No</label>
+    <input type="text" class="form-control" formControlName="invoiceNo">
+    <div *ngIf="form.get('invoiceNo').invalid && form.get('invoiceNo').touched && type !== 'SEARCH'">
+      <div *ngIf="form.get('invoiceNo').errors.required" style="color: orangered">
+        Invoice No is required.
+      </div>
+    </div>
+  </div>
+
   <div class="col-md-6">
     <label>Status</label>
     <select id="inputState" class="form-select" formControlName="status">

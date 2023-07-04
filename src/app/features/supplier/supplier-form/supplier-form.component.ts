@@ -70,6 +70,8 @@ export class SupplierFormComponent implements OnInit {
     if (!this.form.invalid) {
       const data = this.form.value;
 
+      
+     if(this.inputValue===null){
       this.service.createSupplier({body: data}).subscribe({
         next: (res) => {
           console.log(res);
@@ -80,6 +82,19 @@ export class SupplierFormComponent implements OnInit {
           console.log(err);
         },
       });
+     }
+     else{
+      this.service.updateSupplier({body: data,id:this.inputValue.id}).subscribe({
+        next: (res) => {
+          console.log(res);
+          this.onCreate.emit(this.form.value);
+          this.resetForm();
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
+     }
 
     } else {
       console.log('invalid');

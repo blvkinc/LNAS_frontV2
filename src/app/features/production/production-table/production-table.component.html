@@ -3,8 +3,8 @@
   <thead>
   <tr>
     <th scope="col">#</th>
-    <th scope="col">Name</th>
     <th scope="col">Product Id</th>
+    <th scope="col">Name</th> 
     <th scope="col">Description</th>
     <th scope="col">Status</th>
     <th scope="col">Actions</th>
@@ -13,8 +13,8 @@
   <tbody>
   <tr *ngFor="let production of productions">
     <th scope="row">{{production.id}}</th>
-    <td>{{production.name}}</td>
     <td>{{production.productId}}</td>
+    <td>{{production.name}}</td>
     <td>{{production.description}}</td>
     <td>{{production.status}}</td>
     <td>

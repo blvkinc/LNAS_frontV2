@@ -47,6 +47,7 @@ export class PurchaseOrderFormComponent implements OnInit {
   initForm() {
     this.form = this.formBuilder.group({
       id: [this.inputValue?.id ?? null, this.inputValue ? [Validators.required] : []],
+      invoiceNo: [this.inputValue?.id ?? null, this.inputValue ? [Validators.required] : []],
       status: [this.inputValue?.status ?? null, [Validators.required]],
       type: [this.inputValue?.type ?? null, [Validators.maxLength(255)]],
       subTotal: [this.inputValue?.subTotal ?? null, [Validators.required]],
@@ -113,6 +114,8 @@ export class PurchaseOrderFormComponent implements OnInit {
     if (!this.form.invalid) {
       const data = this.form.value;
 
+      
+     if(this.inputValue===null){
       this.service.createPurchase({body: data}).subscribe({
         next: (res) => {
           console.log(res);
@@ -123,6 +126,19 @@ export class PurchaseOrderFormComponent implements OnInit {
           console.log(err);
         },
       });
+     }
+     else{
+      this.service.updatePurchase({body: data,id:this.inputValue.id}).subscribe({
+        next: (res) => {
+          console.log(res);
+          this.onCreate.emit(this.form.value);
+          this.resetForm();
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
+     }
 
     } else {
       console.log('invalid');

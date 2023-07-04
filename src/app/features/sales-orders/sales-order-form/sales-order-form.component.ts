@@ -46,6 +46,7 @@ export class SalesOrderFormComponent implements OnInit {
   initForm() {
     this.form = this.formBuilder.group({
       id: [this.inputValue?.id ?? null, this.inputValue ? [Validators.required] : []],
+      invoiceNo: [this.inputValue?.id ?? null, this.inputValue ? [Validators.required] : []],
       status: [this.inputValue?.status ?? null, [Validators.required]],
       type: [this.inputValue?.type ?? null, [Validators.required]],
       subtotal: [this.inputValue?.subtotal ?? null, [Validators.required]],
@@ -112,16 +113,31 @@ export class SalesOrderFormComponent implements OnInit {
     if (!this.form.invalid) {
       const data = this.form.value;
 
-      this.service.createOrder({body: data}).subscribe({
-        next: (res) => {
-          console.log(res);
-          this.onCreate.emit(this.form.value);
-          this.resetForm();
-        },
-        error: (err) => {
-          console.log(err);
-        },
-      });
+     
+      if(this.inputValue===null){
+        this.service.createOrder({body: data}).subscribe({
+          next: (res) => {
+            console.log(res);
+            this.onCreate.emit(this.form.value);
+            this.resetForm();
+          },
+          error: (err) => {
+            console.log(err);
+          },
+        });
+       }
+       else{
+        this.service.updateOrder({body: data,id:this.inputValue.id}).subscribe({
+          next: (res) => {
+            console.log(res);
+            this.onCreate.emit(this.form.value);
+            this.resetForm();
+          },
+          error: (err) => {
+            console.log(err);
+          },
+        });
+       }
 
     } else {
       console.log('invalid');
