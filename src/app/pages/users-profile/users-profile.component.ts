@@ -9,6 +9,8 @@ export class UsersProfileComponent implements OnInit {
 
   constructor() { }
 
+  user = JSON.parse(localStorage.getItem('auth') || '{}');
+
   ngOnInit(): void {
   }
 
