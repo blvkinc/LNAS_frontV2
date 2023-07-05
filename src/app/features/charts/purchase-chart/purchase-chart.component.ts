@@ -70,13 +70,10 @@ export class PurchaseChartComponent implements OnInit {
 
     ngOnInit(): void {
       const dummyData = [
-        { x: 'Monday', y: 10 },
-        { x: 'Tuesday', y: 5 },
-        { x: 'Wednesday', y: 8 },
-        { x: 'Thursday', y: 3 },
-        { x: 'Friday', y: 6 },
-        { x: 'Saturday', y: 4 },
-        { x: 'Sunday', y: 7 },
+        { x: 'Week 1', y: 10 },
+        { x: 'Week 2', y: 5 },
+        { x: 'Week 3', y: 8 },
+        { x: 'Week 4', y: 3 },
       ];
   
       this.updateChart(dummyData);
@@ -106,7 +103,7 @@ export class PurchaseChartComponent implements OnInit {
           curve: 'smooth',
         },
         title: {
-          text: 'Weekly Production',
+          text: 'Monthly Purchase',
           align: 'left',
         },
         grid: {
