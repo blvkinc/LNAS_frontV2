@@ -1,4 +1,4 @@
-.container {
+main {
     background-color: #88ac8c!important;
     color: #ffffff !important;
     border-radius: 5px !important;
@@ -11,4 +11,10 @@
   .btn {
     border: 1px solid #ffffff;
     background-color: transparent;
+  }
+
+  .btn:hover {
+    border: 1px solid #ffffff;
+    background-color: white;
+    color: #88ac8c;
   }
