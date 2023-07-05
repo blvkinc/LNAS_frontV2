@@ -18,6 +18,7 @@ import {WeeklyReportsComponent} from './features/reports/weekly-reports/weekly-r
 import {MonthlyReportsComponent} from './features/reports/monthly-reports/monthly-reports.component';
 import {authGuard} from './security/auth.guard';
 import { UsersProfileComponent } from './pages/users-profile/users-profile.component';
+import { PagesError404Component } from './pages/pages-error404/pages-error404.component';
 
 const routes: Routes = [
   {
@@ -103,6 +104,10 @@ const routes: Routes = [
         component: MonthlyReportsComponent,
       },
     ],
+  },
+  {
+    path: '**',
+    component: PagesError404Component,
   },
 ];
 
