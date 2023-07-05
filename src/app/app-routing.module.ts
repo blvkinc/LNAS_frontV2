@@ -17,6 +17,7 @@ import {UsersComponent} from './features/users/users.component';
 import {WeeklyReportsComponent} from './features/reports/weekly-reports/weekly-reports.component';
 import {MonthlyReportsComponent} from './features/reports/monthly-reports/monthly-reports.component';
 import {authGuard} from './security/auth.guard';
+import { UsersProfileComponent } from './pages/users-profile/users-profile.component';
 
 const routes: Routes = [
   {
@@ -44,6 +45,10 @@ const routes: Routes = [
       {
         path: 'dashboard',
         component: DashboardComponent,
+      },
+      {
+        path: 'user-profile',
+        component: UsersProfileComponent,
       },
       {
         path: 'farms',
