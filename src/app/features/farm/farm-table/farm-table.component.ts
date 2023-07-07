@@ -18,7 +18,7 @@ export class FarmTableComponent implements OnInit {
   currentPage = 1;
   pageSize = 5;
   totalElements = 0;
-  sortBy = ['id,desc'];
+  sortBy = ['id,asc'];
   filter = '';
 
   pageNumbers: number[] = [];
@@ -60,4 +60,10 @@ export class FarmTableComponent implements OnInit {
   onEditClick(farm: FarmDto) {
     this.onEdit.emit(farm);
   }
+
+  toggleSortOrder(): void {
+  this.sortBy = this.sortBy[0] === 'id,asc' ? ['id,desc'] : ['id,asc'];
+  this.fetchData();
+}
+
 }

@@ -59,4 +59,9 @@ export class UserTableComponent implements OnInit {
     });
   }
 
+  toggleSortOrder(): void {
+    this.sortBy = this.sortBy[0] === 'id,asc' ? ['id,desc'] : ['id,asc'];
+    this.fetchData();
+  }
+
 }

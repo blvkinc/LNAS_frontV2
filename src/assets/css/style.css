@@ -114,6 +114,19 @@
   .dropdown-menu .dropdown-item:hover {
 	background-color: #f6f9ff;
   }
+
+  .custom-btn-link {
+	color: green;
+  }
+  .custom-btn-link:hover {
+	color: rgb(66, 202, 66);
+  }
+  .custom-page-link {
+	background-color: #25ab78 !important;
+	border-color: #25ab78!important;
+  }
+
+
   
   @media (min-width: 768px) {
 	.dropdown-menu-arrow::before {
@@ -489,7 +502,7 @@
 		padding: 20px 0 15px 0;
 		font-size: 18px;
 		font-weight: 500;
-		color: #012970;
+		color: #017037;
 		font-family: "Poppins", sans-serif;
 	  }
  	 h1.card-title-main {
@@ -721,7 +734,7 @@
 	margin-bottom: 5px;
   }
   .dashboard .news h4 a {
-	color: #012970;
+	color: #30a580;
 	transition: 0.3s;
   }
   .dashboard .news h4 a:hover {
@@ -782,7 +795,7 @@
 	background-color: #fff;
 	border-radius: 0.25rem;
 	text-align: center;
-	color: #012970;
+	color: #49a882;
 	padding: 15px 0;
   }
   .iconslist i {

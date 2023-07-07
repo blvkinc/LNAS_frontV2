@@ -62,5 +62,10 @@ export class PurchaseOrderTableComponent implements OnInit {
   onViewClick(purchaseOrder: PurchaseDto) {
 
   }
+
+  toggleSortOrder(): void {
+    this.sortBy = this.sortBy[0] === 'id,asc' ? ['id,desc'] : ['id,asc'];
+    this.fetchData();
+  }
 }
 

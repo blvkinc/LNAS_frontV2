@@ -18,7 +18,7 @@ export class EmployeeTableComponent implements OnInit {
   currentPage = 1;
   pageSize = 5;
   totalElements = 0;
-  sortBy = ['id,desc'];
+  sortBy = ['id,asc'];
   filter = '';
 
   pageNumbers: number[] = [];
@@ -60,4 +60,8 @@ export class EmployeeTableComponent implements OnInit {
     });
   }
 
+  toggleSortOrder(): void {
+    this.sortBy = this.sortBy[0] === 'id,asc' ? ['id,desc'] : ['id,asc'];
+    this.fetchData();
+  }
 }

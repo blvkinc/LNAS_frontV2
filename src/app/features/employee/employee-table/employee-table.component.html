@@ -2,7 +2,11 @@
   <caption></caption>
   <thead>
   <tr>
-    <th scope="col">#</th>
+    <th scope="col">
+      #
+      <button class="btn btn-link custom-btn-link" (click)="toggleSortOrder()">
+        <i [class]="sortBy[0] === 'id,asc' ? 'bi bi-caret-up-fill' : 'bi bi-caret-down-fill'"></i>
+      </button></th>
     <th scope="col">Name</th>
     <th scope="col">Email</th>
     <th scope="col">Phone</th>
@@ -19,7 +23,7 @@
     <td>{{employee.address}}</td>
     <td>{{employee.status}}</td>
     <td>
-      <button (click)="onEditClick(employee)" class="btn text-primary">Edit</button>
+      <button (click)="onEditClick(employee)" class="btn btn-link custom-btn-link">Edit</button>
     </td>
   </tr>
   </tbody>
@@ -32,7 +36,7 @@
         <a class="page-link" (click)="onPageChange(currentPage=currentPage-1)">Previous</a>
       </li>
       <li class="page-item " *ngFor="let pageNumber of pageNumbers" [class.active]="pageNumber === currentPage">
-        <a class="page-link" (click)="onPageChange(currentPage=pageNumber)">{{pageNumber}}</a>
+        <a class="page-link custom-page-link" (click)="onPageChange(currentPage=pageNumber)">{{pageNumber}}</a>
       </li>
       <li class="page-item" [class.disabled]="currentPage === totalPages">
         <a class="page-link" (click)="onPageChange(currentPage=currentPage+1)">Next</a>
