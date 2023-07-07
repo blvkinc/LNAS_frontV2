@@ -11,3 +11,4 @@ export { EmployeeResourceService } from './services/employee-resource.service';
 export { CustomerResourceService } from './services/customer-resource.service';
 export { AuthResourceService } from './services/auth-resource.service';
 export { ReportResourceService } from './services/report-resource.service';
+export { DashboardResourceService } from './services/dashboard-resource.service';

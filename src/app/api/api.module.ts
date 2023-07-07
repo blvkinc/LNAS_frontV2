@@ -17,6 +17,7 @@ import { EmployeeResourceService } from './services/employee-resource.service';
 import { CustomerResourceService } from './services/customer-resource.service';
 import { AuthResourceService } from './services/auth-resource.service';
 import { ReportResourceService } from './services/report-resource.service';
+import { DashboardResourceService } from './services/dashboard-resource.service';
 
 /**
  * Module that provides all services and configuration.
@@ -39,6 +40,7 @@ import { ReportResourceService } from './services/report-resource.service';
     CustomerResourceService,
     AuthResourceService,
     ReportResourceService,
+    DashboardResourceService,
     ApiConfiguration
   ],
 })

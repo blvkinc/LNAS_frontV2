@@ -69,7 +69,7 @@ export class FarmFormComponent implements OnInit {
       const data = this.form.value;
 
    
-      if(this.inputValue===null){
+      if(!this.inputValue){
         this.service.createFarm({body: data}).subscribe({
           next: (res) => {
             console.log(res);

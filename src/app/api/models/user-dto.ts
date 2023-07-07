@@ -4,6 +4,7 @@ import { GrantedAuthority } from './granted-authority';
 export interface UserDto {
   accountNonExpired?: boolean;
   accountNonLocked?: boolean;
+  address?: string;
   authorities?: Array<GrantedAuthority>;
   credentialsNonExpired?: boolean;
   email?: string;

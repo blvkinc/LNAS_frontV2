@@ -1,27 +1,36 @@
-import {Component,OnInit, ViewChild} from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { CommonModule, formatDate } from '@angular/common';
 import {
   ApexAxisChartSeries,
   ApexChart,
   ApexDataLabels,
+  ApexFill,
   ApexGrid,
+  ApexLegend,
+  ApexPlotOptions,
   ApexStroke,
   ApexTitleSubtitle,
+  ApexTooltip,
   ApexXAxis,
+  ApexYAxis,
   ChartComponent,
   NgApexchartsModule,
 } from 'ng-apexcharts';
-import {ReportResourceService} from '../../../api/services/report-resource.service';
-import {ProductionQuantity} from '../../../api/models/production-quantity';
-import { CommonModule } from '@angular/common';
+import { DashboardResourceService } from 'src/app/api/services';
 
 export type ChartOptions = {
-  series: ApexAxisChartSeries;
+  series: ApexAxisChartSeries[];
   chart: ApexChart;
-  xaxis: ApexXAxis;
   dataLabels: ApexDataLabels;
-  grid: ApexGrid;
+  plotOptions: ApexPlotOptions;
+  yaxis: ApexYAxis;
+  xaxis: ApexXAxis;
+  fill: ApexFill;
+  tooltip: ApexTooltip;
   stroke: ApexStroke;
+  legend: ApexLegend;
   title: ApexTitleSubtitle;
+  grid: ApexGrid;
 };
 
 @Component({
@@ -41,54 +50,49 @@ export type ChartOptions = {
   }
 `],
 })
+
 export class PurchaseChartComponent implements OnInit {
   @ViewChild('chart') chart: ChartComponent;
   public chartOptions: Partial<ChartOptions>;
   public hasData: boolean = false;
 
-  constructor(private service: ReportResourceService) {}
-/**
+  constructor(private service: DashboardResourceService) {}
+
   ngOnInit(): void {
-    this.service.getWeeklyProduction().subscribe({
-      next: (data) => {
+    const currentDate = new Date();
+    const startOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+    const endOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
+
+    const startDate = this.formatDate(startOfMonth);
+    const endDate = this.formatDate(endOfMonth);
+
+    this.service.getWeeklyPurchase({startDate, endDate}).subscribe({
+      next: (data: Array<Array<{ week: string; totalSales: number }>>) => {
         this.updateChart(data);
       },
-      error: (e) => {
-        console.log(e);
+      error: (error: any) => {
+        console.log(error);
       },
     });
   }
 
-  updateChart(data: ProductionQuantity[]) {
-    let quantity = [];
-    let categories = [];
-
-    data.forEach(item => {
-      quantity.push(item.totalQuantity);
-      categories.push(item.period);
-    }); */
-
-    ngOnInit(): void {
-      const dummyData = [
-        { x: 'Week 1', y: 10 },
-        { x: 'Week 2', y: 5 },
-        { x: 'Week 3', y: 8 },
-        { x: 'Week 4', y: 3 },
-      ];
   
-      this.updateChart(dummyData);
-    }
-  
-    updateChart(data: { x: string; y: number }[]) {
+  formatDate(date: Date): string {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+
+    updateChart(data: Array<Array<{ week: string; totalSales: number }>>) {
+    if (data.length === 0) {
+      this.hasData = false;
+    } else {
       this.hasData = true;
   
+      const processedData: { week: string; totalSales: number }[] = data.flat();
+  
       this.chartOptions = {
-        series: [
-          {
-            name: 'Quantity',
-            data: data.map(item => item.y),
-          },
-        ],
         chart: {
           height: 350,
           type: 'line',
@@ -101,9 +105,11 @@ export class PurchaseChartComponent implements OnInit {
         },
         stroke: {
           curve: 'smooth',
+          colors: ['#ff0000'],
+          width: 2,
         },
         title: {
-          text: 'Monthly Purchase',
+          text: 'Weekly Purchase',
           align: 'left',
         },
         grid: {
@@ -113,8 +119,9 @@ export class PurchaseChartComponent implements OnInit {
           },
         },
         xaxis: {
-          categories: data.map(item => item.x),
+          categories: processedData.map((item) => item.week),
         },
       };
     }
   }
+}

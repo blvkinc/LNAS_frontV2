@@ -71,7 +71,7 @@ export class CustomerFormComponent implements OnInit {
       const data = this.form.value;
 
       
-     if(this.inputValue===null){
+     if(!this.inputValue){
       this.service.createCustomer({body: data}).subscribe({
         next: (res) => {
           console.log(res);

@@ -99,7 +99,7 @@ export class ProductionFormComponent implements OnInit {
     if (!this.form.invalid) {
       const data = this.form.value;
 
-     if(this.inputValue===null){
+     if(!this.inputValue){
       this.service.createProduction({body: data}).subscribe({
         next: (res) => {
           console.log(res);

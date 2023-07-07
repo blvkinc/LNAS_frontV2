@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { UserDto } from 'src/app/api/models';
+import { UserResourceService } from 'src/app/api/services';
 
 @Component({
   selector: 'app-users-profile',
@@ -7,11 +9,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UsersProfileComponent implements OnInit {
 
-  constructor() { }
+  user: UserDto;
 
-  user = JSON.parse(localStorage.getItem('auth') || '{}');
+  constructor(private service: UserResourceService) { }
 
   ngOnInit(): void {
+    this.service.getUser({ id: 1 }).subscribe({
+      next: (data: UserDto): void => {
+        this.user = data;
+      },
+      error: (error: any): void => {
+        console.error('An error occurred while fetching user data:', error);
+      }
+    });
   }
 
 }

@@ -73,7 +73,7 @@ export class PlantFormComponent implements OnInit {
       const data = this.form.value;
 
   
-     if(this.inputValue===null){
+     if(!this.inputValue){
       this.service.createPlant({body: data}).subscribe({
         next: (res) => {
           console.log(res);

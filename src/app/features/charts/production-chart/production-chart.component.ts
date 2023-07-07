@@ -1,27 +1,36 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import {CommonModule} from '@angular/common';
+import { CommonModule, formatDate } from '@angular/common';
 import {
   ApexAxisChartSeries,
   ApexChart,
   ApexDataLabels,
+  ApexFill,
   ApexGrid,
+  ApexLegend,
+  ApexPlotOptions,
   ApexStroke,
   ApexTitleSubtitle,
+  ApexTooltip,
   ApexXAxis,
+  ApexYAxis,
   ChartComponent,
   NgApexchartsModule,
 } from 'ng-apexcharts';
-import { ReportResourceService } from '../../../api/services/report-resource.service';
-import { ProductionQuantity } from '../../../api/models/production-quantity';
+import { DashboardResourceService } from 'src/app/api/services';
 
 export type ChartOptions = {
-  series: ApexAxisChartSeries;
+  series: ApexAxisChartSeries[];
   chart: ApexChart;
-  xaxis: ApexXAxis;
   dataLabels: ApexDataLabels;
-  grid: ApexGrid;
+  plotOptions: ApexPlotOptions;
+  yaxis: ApexYAxis;
+  xaxis: ApexXAxis;
+  fill: ApexFill;
+  tooltip: ApexTooltip;
   stroke: ApexStroke;
+  legend: ApexLegend;
   title: ApexTitleSubtitle;
+  grid: ApexGrid;
 };
 
 @Component({
@@ -41,87 +50,79 @@ export type ChartOptions = {
   }
 `],
 })
+
 export class ProductionChartComponent implements OnInit {
   @ViewChild('chart') chart: ChartComponent;
   public chartOptions: Partial<ChartOptions>;
   public hasData: boolean = false;
 
-  constructor(private service: ReportResourceService) {}
+  constructor(private service: DashboardResourceService) {}
 
-  /** ngOnInit(): void {
-    this.service.getWeeklyProduction().subscribe({
-      next: (data) => {
+
+  ngOnInit(): void {
+    const currentDate = new Date();
+    const startOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+    const endOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
+
+    const startDate = this.formatDate(startOfMonth);
+    const endDate = this.formatDate(endOfMonth);
+
+    this.service.getMonthlyProductionByWeek({startDate, endDate}).subscribe({
+      next: (data: Array<Array<{ week: string; totalProduction: number }>>) => {
         this.updateChart(data);
       },
-      error: (e) => {
-        console.log(e);
+      error: (error: any) => {
+        console.log(error);
       },
     });
-  } 
+  }
 
-  updateChart(data: ProductionQuantity[]) {
-    let quantity = [];
-    let categories = [];
+  
+  formatDate(date: Date): string {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
 
+  updateChart(data: Array<Array<{ week: string; totalProduction: number }>>) {
     if (data.length === 0) {
       this.hasData = false;
-      quantity = [0, 0, 5, 0, 0, 0, 0];
-      categories = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
     } else {
-      data.forEach(item => {
-        quantity.push(item.totalQuantity);
-        categories.push(item.period);
-      }); */
-      ngOnInit(): void {
-        const dummyData = [
-          { x: 'Monday', y: 10 },
-          { x: 'Tuesday', y: 5 },
-          { x: 'Wednesday', y: 8 },
-          { x: 'Thursday', y: 3 },
-          { x: 'Friday', y: 6 },
-          { x: 'Saturday', y: 4 },
-          { x: 'Sunday', y: 7 },
-        ];
-    
-        this.updateChart(dummyData);
-      }
-    
-      updateChart(data: { x: string; y: number }[]) {
-        this.hasData = true;
-    
-        this.chartOptions = {
-          series: [
-            {
-              name: 'Quantity',
-              data: data.map(item => item.y),
-            },
-          ],
-          chart: {
-            height: 350,
-            type: 'line',
-            zoom: {
-              enabled: false,
-            },
-          },
-          dataLabels: {
+      this.hasData = true;
+  
+      const processedData: { week: string; totalProduction: number }[] = data.flat();
+  
+      this.chartOptions = {
+        chart: {
+          height: 350,
+          type: 'line',
+          zoom: {
             enabled: false,
           },
-          stroke: {
-            curve: 'smooth',
+        },
+        dataLabels: {
+          enabled: false,
+        },
+        stroke: {
+          curve: 'smooth',
+          colors: ['#ff0000'],
+          width: 2,
+        },
+        title: {
+          text: 'Weekly Production',
+          align: 'left',
+        },
+        grid: {
+          row: {
+            colors: ['#f3f3f3', 'transparent'],
+            opacity: 0.5,
           },
-          title: {
-            text: 'Weekly Production',
-            align: 'left',
-          },
-          grid: {
-            row: {
-              colors: ['#f3f3f3', 'transparent'],
-              opacity: 0.5,
-            },
-          },
-          xaxis: {
-            categories: data.map(item => item.x),
-          },
-        };
-      }
+        },
+        xaxis: {
+          categories: processedData.map((item) => item.week),
+        },
+      };
     }
+  }
+}

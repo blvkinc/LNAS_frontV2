@@ -89,7 +89,7 @@ export class UserFormComponent implements OnInit {
       const data = this.form.value;
 
       
-     if(this.inputValue===null){
+     if(!this.inputValue){
       this.service.createUser({body: data}).subscribe({
         next: (res) => {
           console.log(res);

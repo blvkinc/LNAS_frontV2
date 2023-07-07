@@ -71,7 +71,7 @@ export class SupplierFormComponent implements OnInit {
       const data = this.form.value;
 
       
-     if(this.inputValue===null){
+     if(!this.inputValue){
       this.service.createSupplier({body: data}).subscribe({
         next: (res) => {
           console.log(res);

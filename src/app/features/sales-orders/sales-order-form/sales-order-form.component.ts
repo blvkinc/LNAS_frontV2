@@ -114,7 +114,7 @@ export class SalesOrderFormComponent implements OnInit {
       const data = this.form.value;
 
      
-      if(this.inputValue===null){
+      if(!this.inputValue){
         this.service.createOrder({body: data}).subscribe({
           next: (res) => {
             console.log(res);

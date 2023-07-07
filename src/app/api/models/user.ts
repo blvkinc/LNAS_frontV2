@@ -2,6 +2,7 @@
 /* eslint-disable */
 import { Employee } from './employee';
 export interface User {
+  address?: string;
   dateCreated?: string;
   email?: string;
   employee?: Employee;
