@@ -69,8 +69,9 @@ export class ProductionChartComponent implements OnInit {
 
     this.service.getMonthlyProductionByWeek({startDate, endDate}).subscribe({
       next: (data: Array<Array<{ week: string; totalProduction: number }>>) => {
-        console.log(data); 
-        this.updateChart(data);
+        console.log(data);
+      const formattedData = data.map(item => [item[0], item[1]]);
+      this.updateChart(formattedData);
       },
       error: (error: any) => {
         console.log(error);
@@ -96,6 +97,7 @@ export class ProductionChartComponent implements OnInit {
       const processedData: { week: string; totalProduction: number }[] = data.flat();
   
       this.chartOptions = {
+        series: [],
         chart: {
           height: 350,
           type: 'line',

@@ -10,10 +10,14 @@ import { UserResourceService } from 'src/app/api/services';
 export class UsersProfileComponent implements OnInit {
 
   user: UserDto;
-
+  fname: String;
   constructor(private service: UserResourceService) { }
 
   ngOnInit(): void {
+    this.getUserData();
+  }
+
+  getUserData(): void {
     this.service.getUser({ id: 1 }).subscribe({
       next: (data: UserDto): void => {
         this.user = data;
@@ -24,4 +28,14 @@ export class UsersProfileComponent implements OnInit {
     });
   }
 
+  updateUser(): void {
+    this.user.firstName = (<HTMLInputElement>document.getElementById('firstName')).value;
+    this.user.lastName = (<HTMLInputElement>document.getElementById('lastName')).value;
+    this.user.address = (<HTMLInputElement>document.getElementById('Address')).value;
+    this.user.email = (<HTMLInputElement>document.getElementById('Email')).value;
+    this.user.phone = (<HTMLInputElement>document.getElementById('Phone')).value;
+
+  }
+
+    
 }

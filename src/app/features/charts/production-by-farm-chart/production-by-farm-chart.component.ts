@@ -84,9 +84,7 @@ export class ProductionByFarmChartComponent implements OnInit {
       }));
 
       this.chartOptions = {
-        series: [{
-          data: chartData,
-        }],
+        series: [],
         chart: {
           type: 'treemap',
           height: 350,

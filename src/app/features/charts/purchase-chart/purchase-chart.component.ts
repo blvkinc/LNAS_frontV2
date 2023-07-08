@@ -93,6 +93,7 @@ export class PurchaseChartComponent implements OnInit {
       const processedData: { week: string; totalSales: number }[] = data.flat();
   
       this.chartOptions = {
+        series: [],
         chart: {
           height: 350,
           type: 'line',
