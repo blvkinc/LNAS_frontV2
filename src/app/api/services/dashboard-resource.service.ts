@@ -437,6 +437,61 @@ export class DashboardResourceService extends BaseService {
   }
 
   /**
+   * Path part for operation getMonthlyProductionByAvailability
+   */
+  static readonly GetMonthlyProductionByAvailabilityPath = '/api/dashboard/production/monthly-production-by-Availability';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `getMonthlyProductionByAvailability()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getMonthlyProductionByAvailability$Response(params?: {
+  },
+  context?: HttpContext
+
+): Observable<StrictHttpResponse<Array<Array<{
+}>>>> {
+
+    const rb = new RequestBuilder(this.rootUrl, DashboardResourceService.GetMonthlyProductionByAvailabilityPath, 'get');
+    if (params) {
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'json',
+      accept: 'application/json',
+      context: context
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<Array<Array<{
+        }>>>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `getMonthlyProductionByAvailability$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getMonthlyProductionByAvailability(params?: {
+  },
+  context?: HttpContext
+
+): Observable<Array<Array<{
+}>>> {
+
+    return this.getMonthlyProductionByAvailability$Response(params,context).pipe(
+      map((r: StrictHttpResponse<Array<Array<{
+}>>>) => r.body as Array<Array<{
+}>>)
+    );
+  }
+
+  /**
    * Path part for operation getMonthlyPlantCount
    */
   static readonly GetMonthlyPlantCountPath = '/api/dashboard/plant/monthly-count';
