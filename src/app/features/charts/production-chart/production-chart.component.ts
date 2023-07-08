@@ -68,7 +68,7 @@ export class ProductionChartComponent implements OnInit {
     const endDate = this.formatDate(endOfMonth);
 
     this.service.getMonthlyProductionByWeek({startDate, endDate}).subscribe({
-      next: (data: Array<Array<{ week: string; totalProduction: number }>>) => {
+      next: (data: Array<Array<{ week: number; totalProduction: number }>>) => {
         console.log(data);
       const formattedData = data.map(item => [item[0], item[1]]);
       this.updateChart(formattedData);
@@ -87,17 +87,24 @@ export class ProductionChartComponent implements OnInit {
     return `${year}-${month}-${day}`;
   }
 
-  updateChart(data: Array<Array<{ week: string; totalProduction: number }>>) {
+  updateChart(data: Array<Array<{ week: number; totalProduction: number }>>) {
     if (data.length === 0) {
       this.hasData = false;
      this.chartOptions = {};
     } else {
       this.hasData = true;
   
-      const processedData: { week: string; totalProduction: number }[] = data.flat();
+      const processedData: { week: number; totalProduction: number }[] = data.flat();
   
       this.chartOptions = {
-        series: [],
+       // series: [
+        //  {
+     //data: processedData.map((item) => ({
+       // x: item.week,
+       // y: item.totalProduction,
+     // })),
+    //},
+       // ],
         chart: {
           height: 350,
           type: 'line',
