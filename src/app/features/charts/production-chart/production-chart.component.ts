@@ -69,6 +69,7 @@ export class ProductionChartComponent implements OnInit {
 
     this.service.getMonthlyProductionByWeek({startDate, endDate}).subscribe({
       next: (data: Array<Array<{ week: string; totalProduction: number }>>) => {
+        console.log(data); 
         this.updateChart(data);
       },
       error: (error: any) => {
@@ -88,6 +89,7 @@ export class ProductionChartComponent implements OnInit {
   updateChart(data: Array<Array<{ week: string; totalProduction: number }>>) {
     if (data.length === 0) {
       this.hasData = false;
+     this.chartOptions = {};
     } else {
       this.hasData = true;
   
