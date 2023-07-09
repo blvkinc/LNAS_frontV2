@@ -101,17 +101,39 @@ export class SupplierFormComponent implements OnInit {
     }
   }
 
-  onSearchClick() {
-    const data = this.form.value;
-    let filter = ``;
 
-    if (data.status) {
-      if (filter.length > 0) {
-        filter += ` and `;
+    onSearchClick() {
+      const data = this.form.value;
+      let filter = ``;
+  
+      if (data.firstName) {
+        filter += `firstName ~~ '%${data.firstName}%'`;
       }
-      filter += `status : '${data.status}'`;
+  
+      if (data.lastName) {
+        filter += `lastName ~~ '%${data.lastName}%'`;
+      }
+  
+      if (data.email) {
+        filter += `email ~~ '%${data.email}%'`;
+      }
+  
+      if (data.phone) {
+        filter += `phone ~~ '%${data.phone}%'`;
+      }
+  
+      if (data.address) {
+        filter += `address ~~ '%${data.address}%'`;
+      }
+    
+      if (data.status) {
+        if (filter.length > 0) {
+          filter += ` and `;
+        }
+        filter += `status : '${data.status}'`;
+      }
+  console.log(filter);
+      this.onSearch.emit(filter);
     }
-
-    this.onSearch.emit(filter);
+  
   }
-}

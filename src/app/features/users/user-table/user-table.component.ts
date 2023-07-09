@@ -40,12 +40,18 @@ export class UserTableComponent implements OnInit {
     this.onEdit.emit(plant);
   }
 
+  
   fetchData(): void {
-    this.service.paginateUsers({
+    let params = {
       page: this.currentPage - 1,
       size: this.pageSize,
       sort: this.sortBy,
-    }).subscribe({
+    }
+    if (this.filter.length>0){
+      params["filter"] = this.filter;
+
+    }
+    this.service.paginateUsers(params).subscribe({
       next: (data) => {
         this.users = data.content;
         this.totalElements = data.totalElements;
@@ -58,7 +64,6 @@ export class UserTableComponent implements OnInit {
       },
     });
   }
-
   toggleSortOrder(): void {
     this.sortBy = this.sortBy[0] === 'id,asc' ? ['id,desc'] : ['id,asc'];
     this.fetchData();

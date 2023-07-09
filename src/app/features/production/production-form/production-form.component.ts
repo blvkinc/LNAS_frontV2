@@ -133,6 +133,35 @@ export class ProductionFormComponent implements OnInit {
     const data = this.form.value;
     let filter = ``;
 
+    if (data.name) {
+      filter += `name ~~ '%${data.name}%'`;
+    }
+
+    if (data.qty) {
+      filter += `qty ~~ '%${data.qty}%'`;
+    }
+
+    if (data.location) {
+      if (filter.length > 0) {
+        filter += ` or `;
+      }
+      filter += `plant ~~ '%${data.plant}%'`;
+    }
+
+    if (data.productId) {
+      if (filter.length > 0) {
+        filter += ` or `;
+      }
+      filter += `productId ~~ '%${data.productId}%'`;
+    }
+
+    if (data.farm) {
+      if (filter.length > 0) {
+        filter += ` or `;
+      }
+      filter += `farm ~~ '%${data.farm}%'`;
+    }
+
     if (data.status) {
       if (filter.length > 0) {
         filter += ` and `;
@@ -140,6 +169,12 @@ export class ProductionFormComponent implements OnInit {
       filter += `status : '${data.status}'`;
     }
 
+    if (data.description) {
+      filter += `description ~~ '%${data.description}%'`;
+    }
+
+console.log(filter);
     this.onSearch.emit(filter);
   }
+
 }

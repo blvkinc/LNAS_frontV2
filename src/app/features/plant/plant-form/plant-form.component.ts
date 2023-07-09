@@ -118,7 +118,7 @@ export class PlantFormComponent implements OnInit {
       filter += `scientificName ~~ '%${data.scientificName}%'`;
     }
 
-    if (data.description) {
+    if (data.productId) {
       if (filter.length > 0) {
         filter += ` or `;
       }
@@ -131,7 +131,7 @@ export class PlantFormComponent implements OnInit {
       }
       filter += `status : '${data.status}'`;
     }
-
+console.log(filter);
     this.onSearch.emit(filter);
   }
 

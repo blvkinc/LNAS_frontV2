@@ -123,13 +123,24 @@ export class UserFormComponent implements OnInit {
     const data = this.form.value;
     let filter = ``;
 
-    if (data.status) {
-      if (filter.length > 0) {
-        filter += ` and `;
-      }
-      filter += `status : '${data.status}'`;
+    if (data.firstName) {
+      filter += `firstName ~~ '%${data.firstName}%'`;
     }
 
+    if (data.lastName) {
+      filter += `lastName ~~ '%${data.lastName}%'`;
+    }
+
+    if (data.email) {
+      filter += `email ~~ '%${data.email}%'`;
+    }
+
+    if (data.phone) {
+      filter += `phone ~~ '%${data.phone}%'`;
+    }
+    
+console.log(filter);
     this.onSearch.emit(filter);
   }
+
 }

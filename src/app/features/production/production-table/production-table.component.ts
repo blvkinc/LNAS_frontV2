@@ -40,12 +40,18 @@ export class ProductionTableComponent implements OnInit {
     this.onEdit.emit(plant);
   }
 
+ 
   fetchData(): void {
-    this.service.paginateProductions({
+    let params = {
       page: this.currentPage - 1,
       size: this.pageSize,
       sort: this.sortBy,
-    }).subscribe({
+    }
+    if (this.filter.length>0){
+      params["filter"] = this.filter;
+
+    }
+    this.service.paginateProductions(params).subscribe({
       next: (data) => {
         this.productions = data.content;
         this.totalElements = data.totalElements;

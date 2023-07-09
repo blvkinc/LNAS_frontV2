@@ -41,11 +41,16 @@ export class PlantTableComponent implements OnInit {
   }
 
   fetchData(): void {
-    this.service.paginatePlants({
+    let params = {
       page: this.currentPage - 1,
       size: this.pageSize,
       sort: this.sortBy,
-    }).subscribe({
+    }
+    if (this.filter.length>0){
+      params["filter"] = this.filter;
+
+    }
+    this.service.paginatePlants(params).subscribe({
       next: (data) => {
         this.plants = data.content;
         this.totalElements = data.totalElements;

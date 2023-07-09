@@ -40,12 +40,18 @@ export class SalaryTableComponent implements OnInit {
     this.onEdit.emit(salary);
   }
 
+  
   fetchData(): void {
-    this.service.paginateSalaries({
+    let params = {
       page: this.currentPage - 1,
       size: this.pageSize,
       sort: this.sortBy,
-    }).subscribe({
+    }
+    if (this.filter.length>0){
+      params["filter"] = this.filter;
+
+    }
+    this.service.paginateSalaries(params).subscribe({
       next: (data) => {
         this.salaries = data.content;
         this.totalElements = data.totalElements;

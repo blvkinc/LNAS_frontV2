@@ -148,6 +148,14 @@ export class SalesOrderFormComponent implements OnInit {
     const data = this.form.value;
     let filter = ``;
 
+    if (data.id) {
+      filter += `invoiceNo :'%${data.id}%'`;
+    }
+
+    if (data.type) {
+      filter += `type ~~'%${data.type}%'`;
+    }
+
     if (data.status) {
       if (filter.length > 0) {
         filter += ` and `;

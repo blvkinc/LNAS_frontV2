@@ -29,13 +29,10 @@
     </div>
   </div>
 
-  <div class="col-md-6" *ngIf="employeeList">
+  <div class="col-md-6">
     <label>Employee</label>
-    <select id="inputEmployee" class="form-select" formControlName="employee">
-      <option *ngFor="let employee of employeeList"
-              [value]="employee.id">{{employee.firstName}} {{employee.lastName}}</option>
-    </select>
-    <!-- Display error message if the name field is invalid -->
+    <input type="email" class="form-control" formControlName="employee">
+   <!-- Display error message if the name field is invalid -->
     <div *ngIf="form.get('employee').invalid && form.get('employee').touched && type !== 'SEARCH'">
       <div *ngIf="form.get('employee').errors.required" style="color: orangered">
         Employee is required.

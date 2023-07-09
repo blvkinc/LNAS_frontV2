@@ -21,7 +21,7 @@ export class SalaryFormComponent implements OnInit {
 
   form: FormGroup;
   employeeList: EmployeeDto[];
-
+  
   constructor(
     private formBuilder: FormBuilder,
     private service: SalaryResourceService,
@@ -40,7 +40,7 @@ export class SalaryFormComponent implements OnInit {
       paidOn: [this.inputValue?.paidOn ?? null, [Validators.required]],
       description: [this.inputValue?.description ?? null, [Validators.required, Validators.maxLength(255)]],
       status: [this.inputValue?.status ?? null, [Validators.required]],
-      employee: [this.inputValue?.employee ?? null, []],
+      employee: [this.inputValue?.employee ?? null, [Validators.required]],
     });
   }
 
@@ -103,6 +103,18 @@ export class SalaryFormComponent implements OnInit {
   onSearchClick() {
     const data = this.form.value;
     let filter = ``;
+
+    if (data.amount) {
+      filter += `amount ~~ '%${data.amount}%'`;
+    }
+
+    if (data.employee) {
+      filter += `employee : '%${data.employee}%'`;
+    }
+
+    if (data.description) {
+      filter += `amount ~~ '%${data.description}%'`;
+    }
 
     if (data.status) {
       if (filter.length > 0) {

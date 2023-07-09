@@ -36,16 +36,21 @@ export class CustomerTableComponent implements OnInit {
     this.fetchData();
   }
 
-  onEditClick(plant: CustomerDto) {
-    this.onEdit.emit(plant);
+  onEditClick(customer: CustomerDto) {
+    this.onEdit.emit(customer);
   }
 
   fetchData(): void {
-    this.service.paginateCustomers({
+    let params = {
       page: this.currentPage - 1,
       size: this.pageSize,
       sort: this.sortBy,
-    }).subscribe({
+    }
+    if (this.filter.length>0){
+      params["filter"] = this.filter;
+
+    }
+    this.service.paginateCustomers(params).subscribe({
       next: (data) => {
         this.customers = data.content;
         this.totalElements = data.totalElements;
@@ -58,7 +63,7 @@ export class CustomerTableComponent implements OnInit {
       },
     });
   }
-
+  
   toggleSortOrder(): void {
     this.sortBy = this.sortBy[0] === 'id,asc' ? ['id,desc'] : ['id,asc'];
     this.fetchData();

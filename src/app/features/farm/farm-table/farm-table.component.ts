@@ -37,13 +37,18 @@ export class FarmTableComponent implements OnInit {
     this.fetchData();
   }
 
+  
   fetchData(): void {
-    this.service.paginateFarms({
+    let params = {
       page: this.currentPage - 1,
       size: this.pageSize,
       sort: this.sortBy,
-      filter:this.filter
-    }).subscribe({
+    }
+    if (this.filter.length>0){
+      params["filter"] = this.filter;
+
+    }
+    this.service.paginateFarms(params).subscribe({
       next: (data) => {
         this.farms = data.content;
         this.totalElements = data.totalElements;
